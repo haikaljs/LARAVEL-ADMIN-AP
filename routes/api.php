@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('hello', [AuthController::class, 'hello']);
+Route::post('register', [AuthController::class, 'register']);
