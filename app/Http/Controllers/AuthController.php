@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
+
+    //  REGISTER
     public function register(RegisterRequest $request){
 
         $user = User::create([
@@ -24,6 +26,8 @@ class AuthController extends Controller
         return response($user, Response::HTTP_CREATED);
      }
 
+
+     // LOGIN
      public function login(Request $request){
 
         if(!Auth::attempt($request->only('email', 'password'))){
@@ -40,5 +44,11 @@ class AuthController extends Controller
             'jwt' => $token
         ]  
         );
+     }
+
+
+     // GET AUTHORIZED USER
+     public function user(Request $request){
+        return $request->user();
      }
 }
