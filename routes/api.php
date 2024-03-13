@@ -23,6 +23,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::put('users/info', [UserController::class, 'updateInfo']);
+    Route::put('users/password', [UserController::class, 'updatePassword']);
 
     Route::apiResource('users', UserController::class);
 });
