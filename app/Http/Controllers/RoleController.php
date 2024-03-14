@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Http\Resources\RoleResource;
 
 class RoleController extends Controller
 {
   
     public function index()
     {
-        return Role::all();
+        return RoleResource::collection(Role::all());
     }
 
   
@@ -18,13 +19,13 @@ class RoleController extends Controller
     {
         $role = Role::create($request->only('name'));
 
-        return response($user, Response::HTTP_CREATED); // 201
+        return response(new RoleResource($role), Response::HTTP_CREATED); // 201
     }
 
   
     public function show(string $id)
     {
-        return Role::find($id);
+        return new RoleResource(Role::find($id));
     }
 
  
@@ -34,7 +35,7 @@ class RoleController extends Controller
 
         $role->updatea($request->only('name'));
 
-        return response($role, Response::HTTP_CREATED); // 202
+        return response(new RoleResource($role), Response::HTTP_CREATED); // 202
     }
 
    

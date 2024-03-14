@@ -55,7 +55,9 @@ class AuthController extends Controller
 
      // GET AUTHORIZED USER
      public function user(Request $request){
-        return new UserResource($request->user());
+
+        $user =  $request->user();
+        return new UserResource($user->load('role'));
      }
 
     //  LOGOUT
