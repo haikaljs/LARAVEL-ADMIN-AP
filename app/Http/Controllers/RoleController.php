@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Resources\RoleResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
 {
@@ -19,7 +20,9 @@ class RoleController extends Controller
     {
         $role = Role::create($request->only('name'));
 
-        return response(new RoleResource($role), Response::HTTP_CREATED); // 201
+        $role->permissions()->attach($request->input('permissions'));
+
+        return response(new RoleResource($role->load('permissions')), Response::HTTP_CREATED); // 201
     }
 
   
@@ -34,6 +37,8 @@ class RoleController extends Controller
         $role = Role::find($id);
 
         $role->updatea($request->only('name'));
+
+        $role->permissions()->sync($request->input('permissions'));
 
         return response(new RoleResource($role), Response::HTTP_CREATED); // 202
     }
