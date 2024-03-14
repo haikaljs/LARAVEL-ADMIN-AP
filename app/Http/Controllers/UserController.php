@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return User::paginate();
+        return User::with('role')->paginate();
     }
 
     public function store(UserCreateRequest $request)
@@ -29,7 +29,8 @@ class UserController extends Controller
     
     public function show(string $id)
     {
-        return User::find($id);
+        $user = User::with('role')->find($id);
+        return $user;
     }
 
     public function update(UserUpdateRequest $request, string $id)
